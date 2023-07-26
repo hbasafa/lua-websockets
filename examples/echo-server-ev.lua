@@ -1,3 +1,5 @@
+package.path = '../src/?.lua;../src/?/?.lua;'..package.path
+
 local ev = require'ev'
 
 -- this callback is called, whenever a new client connects.

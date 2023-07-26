@@ -221,9 +221,9 @@ function get_appropriate_ws_url()
 	 */
 
 	if (u.substring(0, 5) == "https") {
-		return "wss://localhost:12345";
+		return "wss://192.168.56.2:12345";
 	} else {
-		return "ws://localhost:12345";
+		return "ws://192.168.56.2:12345";
 	}
 }
 
@@ -262,7 +262,7 @@ document.getElementById("number").textContent = get_appropriate_ws_url();
 	}
 
 function reset() {
-	socket_di.send("reset\n");
+	socket_di.send("reset");
 }
 
 
