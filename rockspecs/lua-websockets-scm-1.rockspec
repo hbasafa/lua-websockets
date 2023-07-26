@@ -18,7 +18,8 @@ dependencies = {
   "luabitop",
   "lua-ev",
   "copas",
-  "luasec"
+  "luasec",
+  "libubox-lua"
 }
 
 build = {
@@ -35,6 +36,7 @@ build = {
       ['websocket.server'] = 'src/websocket/server.lua',
       ['websocket.server_ev'] = 'src/websocket/server_ev.lua',
       ['websocket.server_copas'] = 'src/websocket/server_copas.lua',
+      ['websocket.server_uloop'] = 'src/websocket/server_uloop.lua',
       ['websocket.handshake'] = 'src/websocket/handshake.lua',
       ['websocket.tools'] = 'src/websocket/tools.lua',
       ['websocket.frame'] = 'src/websocket/frame.lua',
