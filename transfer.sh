@@ -1,0 +1,1 @@
+scp -r lua-websockets root@192.168.56.2:/root
