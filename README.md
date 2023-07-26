@@ -1,6 +1,3 @@
-# Not maintained / maintainer wanted !!!!
-
-If someone wants to maintain / take ownership of this project, reach out to me (issue, email). I like Lua very much, but I don't have enough time / resources to stay engaged with it.
 
 # About
 
@@ -156,3 +153,28 @@ docker build .
 ```
 
 The first run will take A WHILE.
+
+# Commands
+
+ubus send phone.call '{"method" : "add_device", "responsible": 1, "action": 2,  "event": 3, "time": 4}'
+ubus send phone.call '{"method" : "add_device", "responsible": "Hasan", "action": "Call",  "event": "Hossein", "time": "2023-01-01 12:00"}'
+
+ubus send phone_test '{"event": "phone.config", "method": "status", "res": {"id": "registerd_accounts","auth_user_1": 1001,"account_line_1": 2,"account_status_1": 1,"auth_user_2": 1010,"account_line_2": 3,"account_status_2": 1,"result": "call phone config status!"}}'
+
+ubus send phone_test '{"event": "phone.config", "method": "call_status", "res": {"id": "call_status","calls": [{"call_id": "8094be84852c3352","call_duration": 0,"call_peeruri": "sip:1004@192.168.88.60","call_state": 3,"call_account_auth_user": "1001"}],"result": "call list!"}}'
+
+ubus send phone_test '{"event": "phone.call", "method": "dial", "res": {"call_id": "4daefdc905a82aa8", "result": "call received successfully!"}}'
+
+ubus send phone_test '{"event": "add_device", "method": "ringing", "res": {"event_id": 12, "account_line": 2, "call_id": "4daefdc905a82aa8", "call_peeruri": "", "disp_name": "", "peer_number": ""}}'
+
+ubus send phone_test '{"event": "settings.account", "method": "get", "res": {"username": "1001","label": "ahmad","server_address": "192.168.56.7","password": "123","result": "config retrieved","auth_name": "1001"}}'
+
+ubus send phone_test '{"event": "add_device", "method": "calling", "res": {"event_id": 14, "account_line": 2, "call_id": "4daefdc905a82aa8", "call_peeruri": "", "disp_name": "", "peer_number": ""}}'
+
+ubus send phone_test '{"event": "add_device", "method": "hangup", "res": {"event_id": 16, "account_line": 2, "call_id": "4daefdc905a82aa8", "call_peeruri": "", "disp_name": "", "peer_number": ""}}'
+
+
+network.lan.proto='static'
+network.lan.netmask='255.255.255.0'
+network.lan.ip6assign='60'
+network.lan.ipaddr='192.168.56.7'
