@@ -9,3 +9,4 @@ node_modules/*
 luacov.report.out
 
 *.swp
+*.bak
