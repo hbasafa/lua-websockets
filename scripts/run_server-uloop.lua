@@ -150,6 +150,21 @@ function run_websocket_server()
                 local msg = {event="phone.call", method="forward", res=res}
                 ws:send(json.encode(msg))
 
+              elseif (data.event == "phone.call" and data.method == "conference") then                                                                                                         
+                local res = conn:call("phone.call", "conference", values)                                                                                                                      
+                local msg = {event="phone.call", method="conference", res=res}                                                                                                                 
+                ws:send(json.encode(msg))                                                                                                                                                                  
+                               
+              elseif (data.event == "phone.call" and data.method == "conference_by_call_ids") then                                                                                                         
+                local res = conn:call("phone.call", "conference_by_call_ids", values)                                                                                                                      
+                local msg = {event="phone.call", method="conference_by_call_ids", res=res}                                                                                                                 
+                ws:send(json.encode(msg))                                                                                                                                                                  
+                                                                                                                                                                                                           
+              elseif (data.event == "phone.call" and data.method == "rm_from_conference_by_call_id") then                                                                                                  
+                local res = conn:call("phone.call", "rm_from_conference_by_call_id", values)                                                                                                               
+                local msg = {event="phone.call", method="rm_from_conference_by_call_id", res=res}                                                                                                          
+                ws:send(json.encode(msg))
+
               elseif (data.event == "call.logs" and data.method == "get") then
                 local res = get_rows[[SELECT * FROM logs ORDER BY date DESC]]
                 local msg = {event="call.logs", method="get", res=res}
