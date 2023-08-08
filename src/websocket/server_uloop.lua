@@ -42,12 +42,11 @@ local client = function(sock,protocol)
   end
 
   self.broadcast = function(self,...)
-    for c in pairs(clients[protocol]) do
-      if c ~= self then
+    for c, value in pairs(clients[protocol]) do
+      if value ~= nil then
         c:send(...)
       end
     end
-    self:send(...)
   end
 
   return self
