@@ -500,11 +500,17 @@ function run_websocket_server()
 
 end
 
+local success = false
+local err = nil
 
-local success,err = pcall(function ()
-  run_websocket_server()
-end)
+while( not success )
+do
+  success,err = pcall(function ()
+    run_websocket_server()
+  end)
 
-if not success then
-  print("Error: ",err)
+  if not success then
+    print("Error: ",err)
+  end
 end
+
