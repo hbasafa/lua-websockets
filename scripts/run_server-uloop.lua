@@ -60,52 +60,54 @@ function get_rows(query)
   return rows
 end
 
+function broadcast(clients, msg) 
+  for ws,value in pairs(clients) do
+    if value ~= nil then
+      ws:send(json.encode(msg))
+    end
+  end
+end
+
 function run_websocket_server()
     
+    local clients = {}
+    
+    -- Establish connection
+    local conn = ubus.connect()
+    if not conn then
+        error("Failed to connect to ubusd")
+    end
+
+    -- set events
+    local events = {}
+
+    events['phone_test'] = function(msg)
+      broadcast(clients, msg)
+    end
+
+    events['add_device'] = function(msg)
+      if msg ~= nil then
+        local data = {event='add_device', method=msg['method'], res=msg}
+        broadcast(clients, data)
+      end
+    end
+
+    conn:listen(events)
+
+    -- ubox init
     uloop.init()
 
     -- websocket
-
     local server = websocket.server.uloop.listen
     {
       protocols = {
         ['dumb-increment-protocol'] = function(ws)
-
-            -- Establish connection
-            local conn = ubus.connect()
-            if not conn then
-                error("Failed to connect to ubusd")
-            end
-
-            -- set events
-            local events = {}
-
-            events['phone_test'] = function(msg)
-                ws:broadcast(json.encode(msg))
-            end
-
-            events['add_device'] = function(msg)
-              if msg ~= nil then
-                local data = {event='add_device', method=msg['method'], res=msg}
-                ws:broadcast(json.encode(data))
-              end
-            end
-
-            conn:listen(events)
-
-
-            -- local message = ws:receive()
-            -- if message then
-            --   print(message)
-            --   ws:send(message)
-            -- else
-            --   ws:close()
-            --   return
-            -- end
+            clients[ws] = 0
 
             local message,opcode = ws:receive()
             if not message then
               ws:close()
+              clients[ws] = nil
               print("websocket closed.")
               return
             end
