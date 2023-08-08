@@ -28,7 +28,6 @@ local client = function(sock,protocol)
   end
 
   self.sock_close = function(self)
-    print("sock_close")
     sock_clients[sock:getfd()] = nil
     sock_events[sock:getfd()]:delete()
     sock_events[sock:getfd()] = nil
@@ -39,7 +38,6 @@ local client = function(sock,protocol)
   self = sync.extend(self)
 
   self.on_close = function(self)
-    print("on_close")
     clients[protocol][self] = nil
   end
 
@@ -127,18 +125,6 @@ local listen = function(opts)
       sock_events[new_conn:getfd()] = uloop.fd_add(new_conn, function(csocket, events)
         handler(sock_clients[csocket:getfd()])
       end, uloop.ULOOP_READ)
-      
-      -- this is a dirty trick for preventing
-      -- copas from automatically and prematurely closing
-      -- the socket
-      -- while new_client.state ~= 'CLOSED' do
-      --   local dummy = {
-      --     send = function() end,
-      --     close = function() end
-      --   }
-      --   new_conn:send(dummy)
-      -- end
-
     end
   end, uloop.ULOOP_READ)
 
