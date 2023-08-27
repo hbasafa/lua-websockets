@@ -139,7 +139,7 @@ function run_websocket_server()
 
     print("Server is running...")
     uloop.run()
-
+    conn:close()
 
 end
 
